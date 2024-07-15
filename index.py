@@ -1,8 +1,8 @@
 from dotenv import load_dotenv
 
 import os
-from fib_python_payment_sdk.services.fib_auth_integration_service import FIBAuthIntegrationService
-from fib_python_payment_sdk.services.fib_payment_integration_service import FIBPaymentIntegrationService
+from src.fib_python_payment_sdk.services.fib_auth_integration_service import FIBAuthIntegrationService
+from src.fib_python_payment_sdk.services.fib_payment_integration_service import FIBPaymentIntegrationService
 
 
 # Load environment variables from the .env file
