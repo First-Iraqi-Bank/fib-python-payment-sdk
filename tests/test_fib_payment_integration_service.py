@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch, MagicMock
-from src.fib_python_payment_sdk.services.fib_payment_integration_service import FIBPaymentIntegrationService
-from src.fib_python_payment_sdk.services.fib_auth_integration_service import FIBAuthIntegrationService
+from fib_python_payment_sdk.services.fib_payment_integration_service import FIBPaymentIntegrationService
+from fib_python_payment_sdk.services.fib_auth_integration_service import FIBAuthIntegrationService
 
 
 class TestFIBPaymentIntegrationService(unittest.TestCase):

@@ -11,10 +11,11 @@ The FIB Payment SDK provides seamless integration with the FIB payment system, e
 
 ## Installation
 
-To integrate the SDK into your project, install it via pip:
+To integrate the SDK into your project, You can install a package directly from its GitHub repository using the following command:
 
 ```bash
-pip install fib-payment-sdk
+pip install git+https://github.com/First-Iraqi-Bank/fib-python-payment-sdk
+
 ```
 
 ## Alternative Installation (Without pip)
