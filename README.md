@@ -2,12 +2,35 @@
 
 The FIB Payment SDK provides seamless integration with the FIB payment system, empowering developers to streamline payment transactions and facilitate secure refunds within their applications.
 
+---
+## Table of Contents
+
+- [Features](#features)
+- [Installation](#installation)
+    - [Using pip](#using-pip)
+    - [Alternative Installation (Without pip)](#alternative-installation-without-pip)
+- [Configuration](#configuration)
+- [Usage of the SDK](#usage-of-the-sdk)
+    - [Payment Integration Examples](#payment-integration-examples)
+- [Documentation](#documentation)
+- [Testing](#testing)
+- [Contributing](#contributing)
+- [License](#license)
+- [Support](#support)
+- [Acknowledgments](#acknowledgments)
+- [Versioning](#versioning)
+- [FAQ](#faq)
+---
+
+
 ## Features
 
 - **Payment Transactions**: Enable users to make payments securely through the FIB payment system, handling transactions effortlessly within your application.
 - **Refund Processing**: Process refunds securely through the FIB payment system, managing transactions efficiently within your application.
 - **Payment Status Checking**: Check the status of payments to ensure accurate transaction tracking.
 - **Payment Cancellation**: Cancel payments securely through the FIB payment system, providing flexibility and control over payment transactions.
+
+---
 
 ## Installation
 
@@ -45,6 +68,8 @@ git clone https://github.com/First-Iraqi-Bank/fib-python-payment-sdk.git
 - Consider using pip for managing dependencies whenever possible, as it simplifies dependency management and
   ensures compatibility with other packages.
 
+---
+
 ### Configuration
 
 To configure the SDK, you need to set the following environment variables:
@@ -60,6 +85,8 @@ To configure the SDK, you need to set the following environment variables:
 
 Make sure to set these environment variables appropriately in your application's environment configuration.
 
+---
+
 ### Usage of the SDK
 
 Below is a basic example of how to use the SDK:
@@ -73,124 +100,70 @@ pip install -r requirements.txt
 #### Set Up Environment Variables:
 Create a `.env` file in the root directory of your project and configure the necessary environment variables. Refer to the `.env.example` file for the required variables.
 
-#### Create a Payment Example Usage
-To create a payment, use the `create_payment` method. This method will return the payment details which you can store in a database or cache for later use in other functionalities like callback URL handling, checking payment status, cancelling payment, and refunding payment.
+Certainly! Here's a documentation section for your README.md file that explains how to use the payment integration examples:
 
-```python
-import os
-from dotenv import load_dotenv
-from fib_payment_sdk.services import FIBAuthIntegrationService, FIBPaymentIntegrationService
+---
 
-# Load environment variables from the .env file
-load_dotenv()
+### Payment Integration Examples
 
-# Initialize the authentication service
-auth_service = FIBAuthIntegrationService()
+#### Overview
 
-# Initialize the payment integration service
-payment_service = FIBPaymentIntegrationService(auth_service)
+This section provides examples of integrating with the FIB payment system using the Python SDK. The examples demonstrate various operations such as creating payments, checking payment status, refunding payments, and canceling payments.
 
-try:
-    # Create a new payment
-    payment_response = payment_service.create_payment(1000, 'http://localhost/callback', 'Test payment description')
-    
-    # Extract payment details from the response
-    payment_data = payment_response.json()
-    
-    # Payment details (example using a dictionary)
-    payment_details = {
-        'fib_payment_id': payment_data['paymentId'],
-        'readable_code': payment_data['readableCode'],
-        'personal_app_link': payment_data['personalAppLink'],
-        'valid_until': payment_data['validUntil'],
-    }
+#### Running the Examples
 
-    # #TODO: Store the payment details in a database or cache. These details will be used for other functionalities such as handling callback URLs, checking payment status, and canceling payments.
-    # Return the payment details to the end user to proceed with the payment
-    return payment_details
-except Exception as e:
-    print(f"Error: {e}")
-```
+1. **Creating a Payment:**
 
-- Storing Payment Details: Once you receive the payment details from the `create_payment` method, you can store them in a database or a cache.
-  This allows you to retrieve and use these details for further actions such as checking the payment status, processing refunds, or handling payment callbacks.
+   The example demonstrates how to create a new payment and retrieve its details.
 
-    - Database: Save the payment details in a relational database (e.g., MySQL, PostgreSQL) or a NoSQL database (e.g., MongoDB).
-    - Cache: Use an in-memory cache (e.g., Redis, Memcached) to store the payment details for quick access.
+   ```bash
+   python create_payment.py
+   ```
 
-- Returning Payment Details: After storing the payment details, return them to the end user. The returned details include:
+   This script initializes the payment integration service and creates a new payment with a specified amount, callback URL, and description.
 
-    - `fib_payment_id`: The unique identifier for the payment.
-    - `readable_code`: A readable code for the payment.
-    - `personal_app_link`: A link for the end user to proceed with the payment in the personal app.
-    - `valid_until`: The expiration time for the payment.
+2. **Checking Payment Status:**
 
-By following these steps, you ensure that the payment details are securely stored and easily accessible for further processing.
+   Use the following script to check the status of a previously created payment:
 
-#### Checking the Payment Status
-To check the status of a payment, use the `check_payment_status` method. This method requires the `payment_id` which was returned when the payment was created.
+   ```bash
+   python check_payment_status.py
+   ```
 
-```python
-payment_status = payment_service.check_payment_status(payment_id)
-print(f"Payment Status: {payment_status}")
-```
+   Replace `"your_payment_id_here"` with the actual payment ID received from the create payment operation.
 
-#### Refunding a Payment
-To refund a payment, use the `refund` method. This method also requires the `payment_id`.
+3. **Refunding a Payment:**
 
-```python
-refund_response = payment_service.refund(payment_id)
-```
+   To refund a payment, execute the following script:
 
-#### Cancelling a Payment
-To cancel a payment, use the `cancel` method. This method requires the `payment_id`.
+   ```bash
+   python refund_payment.py
+   ```
 
-```python
-cancel_response = payment_service.cancel(payment_id)
-```
+   Replace `"your_payment_id_here"` with the actual payment ID received from the create payment operation.
 
-#### Handling Payment Callbacks
-To handle payment callbacks, ensure your application has a POST API or URL that FIB can call to notify your application about payment status updates.
+4. **Canceling a Payment:**
 
-Callback URL Requirements: Your callback URL should be able to handle POST requests with a request body containing two properties:
+   Use this script to cancel a payment by its ID:
 
-- `id`: This represents the payment ID associated with the callback.
-- `status`: This indicates the current status of the payment. Refer to the "Check Payment Status" section of this documentation for more details. The status returned should mirror the data structure returned by the check status endpoint.
+   ```bash
+   python cancel_payment.py
+   ```
 
-```python
-from flask import Flask, request, jsonify
+   Replace `"your_payment_id_here"` with the actual payment ID received from the create payment operation.
 
-app = Flask(__name__)
+#### Error Handling
 
-@app.route('/callback', methods=['POST'])
-def callback():
-    payload = request.get_json()
-    
-    # Validate incoming payload
-    payment_id = payload.get('id')
-    status = payload.get('status')
-    
-    if not payment_id or not status:
-        return jsonify({'error': 'Invalid callback payload'}), 400
-    
-    # Process the callback
-    try:
-        payment_service.handle_callback(payment_id, status)
-        # TODO: Implement your callback handling logic here
-        
-        return jsonify({'message': 'Callback processed successfully'})
-    except Exception as e:
-        return jsonify({'error': f'Failed to process callback: {e}'}), 500
-```
+Each example includes basic error handling to catch and print any exceptions that may occur during the execution of API calls.
 
-##### Notes
-- Replace `/callback` with your actual endpoint URL.
-- Ensure your callback endpoint is accessible to FIB and handles errors gracefully.
-- Implement the `handle_callback` method in your `FIBPaymentIntegrationService` class to handle the payment status update internally.
+---
 
 ### FIB Payment Documentation
 
 For comprehensive details on FIB Online Payment, please refer to the [full documentation](https://documenter.getpostman.com/view/18377702/UVCB93tc).
+
+
+---
 
 ### Testing
 
@@ -244,26 +217,41 @@ python test.py tests.test_fib_payment_integration_service.TestFIBPaymentIntegrat
 
 
 
+---
+
 
 ### Contributing
 
 Contributions are welcome! Please read `CONTRIBUTING.md` for details on our code of conduct, and the process for submitting pull requests.
 
+
+---
+
+
 ### License
 
 This project is licensed under the MIT License. See the [LICENSE.md](LICENSE.md) file for details.
+
+
+---
 
 ### Support
 
 For support, please contact support@fib-payment.com or visit our website.
 
+---
+
 ### Acknowledgments
 
 Thanks to the FIB Payment development team for their contributions. This SDK uses the `requests` library for API requests.
 
+---
+
 ### Versioning
 
 We use semantic versioning (SemVer) principles for subsequent releases (v0.2.0, v0.3.0, etc.). For the versions available, see the tags on this repository.
+
+---
 
 ### FAQ
 
