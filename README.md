@@ -219,7 +219,11 @@ To facilitate running tests and formatting the output, a custom script (test.py)
 - This script uses unittest for executing tests and customizes the output format for readability.
 - The script scans the tests directory for files matching test_*.py and runs all test cases.
 - Test names are displayed in cyan color for clarity.
-- Results are indicated with green check marks (<span style="color:green;">✔</span>) for success and red cross marks (<span style="color:red;">✘</span>) for failures.Output is structured to show each test name followed by its result for easy tracking of test progress and outcomes.
+
+[//]: # (- Results are indicated with green check marks &#40;<span style="color:green;">✔</span>&#41; for success and red cross marks &#40;<span style="color:red;">✘</span>&#41; for failures.Output is structured to show each test name followed by its result for easy tracking of test progress and outcomes.)
+- Results are indicated with emojis:
+  - Green check mark (**✅**) for success
+  - Red cross mark (**❌**) for failures.
 - To run the tests, execute the following command:
 
 ```bash
@@ -232,10 +236,10 @@ To add filtering for running a specific test using your custom test runner
 python test.py tests.test_fib_payment_integration_service.TestFIBPaymentIntegrationService.test_create_payment_success
 ```
 
-- Running test: test_get_token............ <span style="color:green;">✔</span>
-- Running test: test_check_payment_status_success............ <span style="color:green;">✔</span>
-- Running test: test_create_payment_success............ <span style="color:green;">✔</span>
-- Running test: test_refund_success............ <span style="color:red;">✘</span>
+- Running test: test_get_token............ ✅
+- Running test: test_check_payment_status_success............ ✅
+- Running test: test_create_payment_success............ ✅
+- Running test: test_refund_success............ ❌
 
 
 
