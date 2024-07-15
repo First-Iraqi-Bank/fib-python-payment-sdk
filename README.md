@@ -193,11 +193,52 @@ For comprehensive details on FIB Online Payment, please refer to the [full docum
 
 ### Testing
 
-To ensure the SDK functions correctly, run tests using pytest:
+To ensure the SDK functions correctly, ensure Python and necessary dependencies are installed:
+
+#### Running Tests:
+Navigate to the directory containing your SDK. Use the following command to run tests
+```bash
+   python -m unittest discover -s tests -p 'test_*.py'
+```
+
+#### Run a Specific Test Case
+To run a specific test case from a module using unittest:
+```bash
+  python -m unittest tests.test_module.TestClassName
+```
+
+#### Run a Specific Test Method
+To run a specific test method within a test case:
+```bash
+  python -m unittest tests.test_module.TestClassName.test_method_name
+```
+
+
+### Running Tests with Custom Format
+To facilitate running tests and formatting the output, a custom script (test.py) has been created.
+- This script uses unittest for executing tests and customizes the output format for readability.
+- The script scans the tests directory for files matching test_*.py and runs all test cases.
+- Test names are displayed in cyan color for clarity.
+- Results are indicated with green check marks (<span style="color:green;">✔</span>) for success and red cross marks (<span style="color:red;">✘</span>) for failures.Output is structured to show each test name followed by its result for easy tracking of test progress and outcomes.
+- To run the tests, execute the following command:
 
 ```bash
-pytest
+python test.py
 ```
+To add filtering for running a specific test using your custom test runner
+
+
+```bash
+python test.py tests.test_fib_payment_integration_service.TestFIBPaymentIntegrationService.test_create_payment_success
+```
+
+- Running test: test_get_token............ <span style="color:green;">✔</span>
+- Running test: test_check_payment_status_success............ <span style="color:green;">✔</span>
+- Running test: test_create_payment_success............ <span style="color:green;">✔</span>
+- Running test: test_refund_success............ <span style="color:red;">✘</span>
+
+
+
 
 ### Contributing
 
