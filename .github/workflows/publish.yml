@@ -13,10 +13,10 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3  # Updated to the latest version
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4  # Updated to the latest version
         with:
           python-version: '3.8'  # Specify the Python version
 
@@ -24,6 +24,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install setuptools wheel
+
+      - name: Clean dist directory
+        run: rm -rf dist/*  # Ensure the dist directory is clean
 
       - name: Build the package
         run: python setup.py sdist bdist_wheel
