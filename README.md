@@ -281,6 +281,4 @@ A: Contact support@fib-payment.com to request an API key.
 
 A: Yes, but ensure it is correctly configured and tested for your environment.
 
----
 
-This adds the example files to your documentation and explains how to use them effectively.
