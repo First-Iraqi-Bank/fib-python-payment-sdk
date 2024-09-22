@@ -21,6 +21,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Configure Git
         run: |
           git config --global user.email "${{ vars.FIB_BOT_MAIL }}"
@@ -65,9 +66,9 @@ jobs:
 
       - name: Update setup.py
         run: |
-          sed -i "s/version='[^']*'/version='${{ env.NEW_VERSION }}'/" setup.py
+          sed -i '' "s/version='[^']*'/version='${{ env.NEW_VERSION }}'/" setup.py  # Use empty string for macOS compatibility
           git add setup.py
-          git commit -m "Bump version to ${{ env.NEW_VERSION }}"
+          git commit -m "Bump version to ${{ env.NEW_VERSION }}" || echo "No changes to commit"
 
       - name: Push changes and create tag
         run: |
