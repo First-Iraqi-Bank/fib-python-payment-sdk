@@ -29,15 +29,10 @@ class FIBAuthIntegrationService:
     def __init__(self):
         self.config = config
         self.account = self.config['clients'][self.config['auth_account'] or 'default']
-        self.logger = logging.getLogger('fib')
-        log_file_path = '../logs/fib.log'
-        os.makedirs(os.path.dirname(log_file_path), exist_ok=True)
-
-        self.logger.addHandler(logging.FileHandler('../logs/fib.log'))
-        self.logger.setLevel(logging.ERROR)
 
     def get_token(self):
         try:
+            print(self.account['client_id'], self.account['secret'], self.config['grant'])
             response = retry(
                 lambda: requests.post(self.config['login'], auth=(self.account['client_id'], self.account['secret']),
                                       data={'grant_type': self.config['grant']}))
@@ -45,9 +40,6 @@ class FIBAuthIntegrationService:
             if response.status_code == 200 and 'access_token' in response.json():
                 return response.json()['access_token']
 
-            self.logger.error('Failed to retrieve access token from FIB Payment API.', {'response': response.text})
             raise Exception('Failed to retrieve access token.')
         except Exception as e:
-            self.logger.error('Error occurred while retrieving access token from FIB Payment API.',
-                              {'message': str(e), 'trace': e.__traceback__})
             raise e

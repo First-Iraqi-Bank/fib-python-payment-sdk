@@ -1,8 +1,13 @@
+Here's an updated version of your SDK documentation with the integration examples and payment operations files added:
+
+---
+
 # FIB Payment SDK
 
 The FIB Payment SDK provides seamless integration with the FIB payment system, empowering developers to streamline payment transactions and facilitate secure refunds within their applications.
 
 ---
+
 ## Table of Contents
 
 - [Features](#features)
@@ -22,243 +27,264 @@ The FIB Payment SDK provides seamless integration with the FIB payment system, e
 - [FAQ](#faq)
 ---
 
-
 ## Features
 
-- **Payment Transactions**: Enable users to make payments securely through the FIB payment system, handling transactions effortlessly within your application.
-- **Refund Processing**: Process refunds securely through the FIB payment system, managing transactions efficiently within your application.
-- **Payment Status Checking**: Check the status of payments to ensure accurate transaction tracking.
-- **Payment Cancellation**: Cancel payments securely through the FIB payment system, providing flexibility and control over payment transactions.
+- **Payment Transactions**: Enable users to make payments securely through the FIB payment system.
+- **Refund Processing**: Process refunds securely and efficiently.
+- **Payment Status Checking**: Track the status of payments accurately.
+- **Payment Cancellation**: Cancel payments securely and easily.
 
 ---
 
 ## Installation
 
-To integrate the SDK into your project, You can install a package directly from its GitHub repository using the following command:
+Install the SDK using pip:
 
 ```bash
 pip install git+https://github.com/First-Iraqi-Bank/fib-python-payment-sdk
-
 ```
 
-## Alternative Installation (Without pip)
-If your project prefers not to use pip for dependency management, you can manually include the FIB Payment SDK by following these steps:
+### Alternative Installation (Without pip)
 
-- Clone the Repository: Clone the FIB Payment SDK repository directly into your project directory or any preferred
-  location:
+You can clone the repository and manually include the SDK in your project:
 
 ```bash
 git clone https://github.com/First-Iraqi-Bank/fib-python-payment-sdk.git
 ```
 
-- Include in Your Project:
-  Copy or move the cloned `fib-python-payment-sdk` directory into your project structure. You can place it wherever it suits your project best.
-
-- Autoloading (if applicable):
-  Ensure that the SDK directory is included in your Python path. You might do this by adding the directory to your `PYTHONPATH` or by using a virtual environment.
-
-- Usage: After including the SDK in your project, you can use its classes and functionalities directly in your Python
-  files.
-
-### Notes
-- Ensure that the SDK repository URL (https://github.com/First-Iraqi-Bank/fib-python-payment-sdk.git) is correct and
-  accessible.
-- Manually managing dependencies may require additional effort to keep the SDK updated with the latest changes and
-  fixes.
-- Consider using pip for managing dependencies whenever possible, as it simplifies dependency management and
-  ensures compatibility with other packages.
+Ensure to include the SDK directory in your Python path.
 
 ---
 
 ### Configuration
 
-To configure the SDK, you need to set the following environment variables:
+Set the following environment variables to configure the SDK:
 
 - `FIB_API_KEY`: Your FIB payment API key.
 - `FIB_API_SECRET`: Your FIB payment API secret.
-- `FIB_BASE_URL`: The base URL for the FIB payment API (default: https://api.fibpayment.com).
-- `FIB_GRANT_TYPE`: The grant type for authentication with the FIB payment API (default: client_credentials).
-- `FIB_REFUNDABLE_FOR`: The period for which transactions can be refunded (default: P7D, which stands for 7 days).
-- `FIB_CURRENCY`: The currency used for transactions with the FIB payment system (default: IQD).
-- `FIB_CALLBACK_URL`: The callback URL for handling payment notifications from the FIB payment system.
-- `FIB_ACCOUNT`: The FIB payment account identifier.
+- `FIB_BASE_URL`: Base URL for the FIB payment API.
+- `FIB_GRANT_TYPE`: Authentication grant type (default: client_credentials).
+- `FIB_REFUNDABLE_FOR`: Transaction refund period (default: P7D).
+- `FIB_CURRENCY`: Transaction currency (default: IQD).
+- `FIB_CALLBACK_URL`: Callback URL for handling payment notifications.
 
-Make sure to set these environment variables appropriately in your application's environment configuration.
+---
+
+Got it! You want to include the functionality as part of the SDK usage examples in the documentation, without referencing an actual file. Here’s how you can structure that:
 
 ---
 
 ### Usage of the SDK
 
-Below is a basic example of how to use the SDK:
+Below is a basic example of how to use the SDK to handle payment operations directly within your application.
 
-#### Ensure Dependencies are Installed:
-Make sure you have installed all required dependencies using pip:
-```bash
-pip install -r requirements.txt
-```
+#### Payment Operations Example
 
-#### Set Up Environment Variables:
-Create a `.env` file in the root directory of your project and configure the necessary environment variables. Refer to the `.env.example` file for the required variables.
+This example demonstrates how to perform common payment operations, including creating a payment, checking its status, issuing a refund, and canceling a payment.
 
-Certainly! Here's a documentation section for your README.md file that explains how to use the payment integration examples:
+1. **Setup Environment Variables**:
+   Ensure you have loaded the necessary environment variables for the SDK.
+
+   ```python
+   from dotenv import load_dotenv
+   import os
+
+   # Load environment variables from the .env file
+   load_dotenv()
+   ```
+
+2. **Initialize Services**:
+   Create instances of the authentication and payment integration services.
+
+   ```python
+   from fib_python_payment_sdk.services.fib_auth_integration_service import FIBAuthIntegrationService
+   from fib_python_payment_sdk.services.fib_payment_integration_service import FIBPaymentIntegrationService
+
+   # Initialize the authentication service
+   auth_service = FIBAuthIntegrationService()
+
+   # Initialize the payment integration service
+   payment_service = FIBPaymentIntegrationService(auth_service)
+   ```
+
+3. **Create a Payment**:
+
+   To create a payment, use the following function:
+
+   ```python
+   def create_payment(amount, callback_url, description):
+       try:
+           payment_response = payment_service.create_payment(amount, callback_url, description)
+           payment_details = {
+               'fib_payment_id': payment_response['paymentId'],
+               'readable_code': payment_response['readableCode'],
+               'personal_app_link': payment_response['personalAppLink'],
+               'valid_until': payment_response['validUntil'],
+           }
+           return payment_details
+       except Exception as e:
+           print("Error during payment creation:", str(e))
+           return None
+   ```
+
+   Example usage:
+
+   ```python
+   payment_details = create_payment(1000, 'http://localhost/callback', 'Test payment description')
+   print("Payment Details:", payment_details)
+   ```
+
+4. **Check Payment Status**:
+
+   To check the status of a payment:
+
+   ```python
+   def check_payment_status(payment_id):
+       try:
+           status = payment_service.check_payment_status(payment_id)
+           return status
+       except Exception as e:
+           print("Error during payment status check:", str(e))
+           return None
+   ```
+
+   Example usage:
+
+   ```python
+   if payment_details:
+       payment_id = payment_details['fib_payment_id']
+       status = check_payment_status(payment_id)
+       print("Payment Status:", status)
+   ```
+
+5. **Refund a Payment**:
+
+   To refund a payment:
+
+   ```python
+   def refund_payment(payment_id):
+       try:
+           refund_response = payment_service.refund(payment_id)
+           return refund_response.status_code
+       except Exception as e:
+           print("Error during refund:", str(e))
+           return None
+   ```
+
+   Example usage:
+
+   ```python
+   if payment_details:
+       payment_id = payment_details['fib_payment_id']
+       refund_status_code = refund_payment(payment_id)
+       print("Refund Status Code:", refund_status_code)
+   ```
+
+6. **Cancel a Payment**:
+
+   To cancel a payment:
+
+   ```python
+   def cancel_payment(payment_id):
+       try:
+           cancel_response = payment_service.cancel(payment_id)
+           return cancel_response.status_code
+       except Exception as e:
+           print("Error during cancellation:", str(e))
+           return None
+   ```
+
+   Example usage:
+
+   ```python
+   if payment_details:
+       payment_id = payment_details['fib_payment_id']
+       cancel_status_code = cancel_payment(payment_id)
+       print("Cancel Status Code:", cancel_status_code)
+   ```
 
 ---
 
-### Payment Integration Examples
+This structure provides clear examples of how to use the SDK for payment operations, focusing on practical usage rather than code organization in a specific file.
 
-#### Overview
 
-This section provides examples of integrating with the FIB payment system using the Python SDK. The examples demonstrate various operations such as creating payments, checking payment status, refunding payments, and canceling payments.
-
-#### Running the Examples
-
-1. **Creating a Payment:**
-
-   The example demonstrates how to create a new payment and retrieve its details.
-
-   ```bash
-   python create_payment.py
-   ```
-
-   This script initializes the payment integration service and creates a new payment with a specified amount, callback URL, and description.
-
-2. **Checking Payment Status:**
-
-   Use the following script to check the status of a previously created payment:
-
-   ```bash
-   python check_payment_status.py
-   ```
-
-   Replace `"your_payment_id_here"` with the actual payment ID received from the create payment operation.
-
-3. **Refunding a Payment:**
-
-   To refund a payment, execute the following script:
-
-   ```bash
-   python refund_payment.py
-   ```
-
-   Replace `"your_payment_id_here"` with the actual payment ID received from the create payment operation.
-
-4. **Canceling a Payment:**
-
-   Use this script to cancel a payment by its ID:
-
-   ```bash
-   python cancel_payment.py
-   ```
-
-   Replace `"your_payment_id_here"` with the actual payment ID received from the create payment operation.
-
-#### Error Handling
-
-Each example includes basic error handling to catch and print any exceptions that may occur during the execution of API calls.
 
 ---
 
-### FIB Payment Documentation
+### Documentation
 
-For comprehensive details on FIB Online Payment, please refer to the [full documentation](https://documenter.getpostman.com/view/18377702/UVCB93tc).
-
+For more detailed documentation, refer to the [FIB Online Payment API Documentation](https://documenter.getpostman.com/view/18377702/UVCB93tc).
 
 ---
 
 ### Testing
 
-To ensure the SDK functions correctly, ensure Python and necessary dependencies are installed:
+Run the SDK tests using `unittest`:
 
-#### Running Tests:
-Navigate to the directory containing your SDK. Use the following command to run tests
 ```bash
-   python -m unittest discover -s tests -p 'test_*.py'
+python -m unittest discover -s tests -p 'test_*.py'
 ```
 
-#### Run a Specific Test Case
-To run a specific test case from a module using unittest:
+Run a specific test case:
+
 ```bash
-  python -m unittest tests.test_module.TestClassName
+python -m unittest tests.test_module.TestClassName
 ```
 
-#### Run a Specific Test Method
-To run a specific test method within a test case:
+Run a specific test method:
+
 ```bash
-  python -m unittest tests.test_module.TestClassName.test_method_name
+python -m unittest tests.test_module.TestClassName.test_method_name
 ```
 
-
-### Running Tests with Custom Format
-To facilitate running tests and formatting the output, a custom script (test.py) has been created.
-- This script uses unittest for executing tests and customizes the output format for readability.
-- The script scans the tests directory for files matching test_*.py and runs all test cases.
-- Test names are displayed in cyan color for clarity.
-
-[//]: # (- Results are indicated with green check marks &#40;<span style="color:green;">✔</span>&#41; for success and red cross marks &#40;<span style="color:red;">✘</span>&#41; for failures.Output is structured to show each test name followed by its result for easy tracking of test progress and outcomes.)
-- Results are indicated with emojis:
-  - Green check mark (**✅**) for success
-  - Red cross mark (**❌**) for failures.
-- To run the tests, execute the following command:
+To run tests with custom formatting, use:
 
 ```bash
 python test.py
 ```
-To add filtering for running a specific test using your custom test runner
-
-
-```bash
-python test.py tests.test_fib_payment_integration_service.TestFIBPaymentIntegrationService.test_create_payment_success
-```
-
-- Running test: test_get_token............ ✅
-- Running test: test_check_payment_status_success............ ✅
-- Running test: test_create_payment_success............ ✅
-- Running test: test_refund_success............ ❌
-
-
 
 ---
-
 
 ### Contributing
 
-Contributions are welcome! Please read `CONTRIBUTING.md` for details on our code of conduct, and the process for submitting pull requests.
-
+Contributions are welcome! Please refer to the `CONTRIBUTING.md` for guidelines.
 
 ---
-
 
 ### License
 
 This project is licensed under the MIT License. See the [LICENSE.md](LICENSE.md) file for details.
 
-
 ---
 
 ### Support
 
-For support, please contact support@fib-payment.com or visit our website.
+For support, contact support@fib-payment.com.
 
 ---
 
 ### Acknowledgments
 
-Thanks to the FIB Payment development team for their contributions. This SDK uses the `requests` library for API requests.
+Thanks to the FIB Payment development team and the `requests` library.
 
 ---
 
 ### Versioning
 
-We use semantic versioning (SemVer) principles for subsequent releases (v0.2.0, v0.3.0, etc.). For the versions available, see the tags on this repository.
+We follow [Semantic Versioning](https://semver.org/) for releases.
 
 ---
 
 ### FAQ
 
-#### Q: How do I get an API key for the FIB Payment system?
+**Q: How do I get an API key for the FIB Payment system?**
 
-A: Please contact our support team at support@fib-payment.com to request an API key.
+A: Contact support@fib-payment.com to request an API key.
 
-#### Q: Can I use this SDK in a production environment?
+**Q: Can I use this SDK in production?**
 
-A: Yes, the SDK is designed for use in production environments, but please ensure you have configured it correctly and have got the
+A: Yes, but ensure it is correctly configured and tested for your environment.
+
+---
+
+This adds the example files to your documentation and explains how to use them effectively.
