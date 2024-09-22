@@ -3,9 +3,9 @@ name: Publish to PyPI
 on:
   push:
     branches:
-      - main  # Triggers the workflow when there is a push to the main branch
+      - main
     tags:
-      - v*  # Also triggers when a tag starting with 'v' is pushed
+      - v*
 
 jobs:
   build:
@@ -13,28 +13,32 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v3  # Updated to the latest version
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v4  # Updated to the latest version
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.8'  # Specify the Python version
+          python-version: '3.8'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install setuptools wheel
+          pip install setuptools wheel bumpversion
+
+      - name: Bump version
+        run: |
+          bumpversion patch  # You can change this to `minor` or `major` as needed
 
       - name: Clean dist directory
-        run: rm -rf dist/*  # Ensure the dist directory is clean
+        run: rm -rf dist/*
 
       - name: Build the package
         run: python setup.py sdist bdist_wheel
 
       - name: Publish to PyPI
         env:
-          TWINE_USERNAME: __token__  # Use your PyPI username or __token__ if using an API token
-          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}  # Store your PyPI token in GitHub secrets
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
         run: |
           pip install twine
           twine upload dist/*
