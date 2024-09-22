@@ -89,8 +89,9 @@ jobs:
 
       - name: Build and publish to PyPI
         env:
-          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+#          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+#          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+          TWINE_API_KEY: ${{ secrets.PYPI_TOKEN }}
         run: |
           python setup.py sdist bdist_wheel  # Build source distribution and wheel
           twine upload dist/*                # Upload to PyPI
