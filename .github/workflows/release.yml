@@ -72,12 +72,18 @@ jobs:
 
       - name: Update setup.py with new version
         run: |
-          sed -i "s/version='[^']*'/version='${{ env.NEW_VERSION }}'/" setup.py
+          if grep -q "version='${{ env.NEW_VERSION }}'" setup.py; then
+            echo "Version is already set to ${{ env.NEW_VERSION }}, no update needed."
+            exit 0
+          else
+            sed -i "s/version='[^']*'/version='${{ env.NEW_VERSION }}'/" setup.py
+            echo "Updated setup.py to version ${{ env.NEW_VERSION }}"
+          fi
 
       - name: Commit and push new version
         run: |
           git add setup.py
-          git commit -m "Bump version to ${{ env.NEW_VERSION }}"
+          git commit -m "Bump version to ${{ env.NEW_VERSION }}" || echo "No changes to commit"
           git push origin main
 
       - name: Build and publish to PyPI
