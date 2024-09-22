@@ -72,12 +72,20 @@ jobs:
 
       - name: Update setup.py
         run: |
-          sed -i "s/version='[^']*'/version='${{ env.NEW_VERSION }}'/" setup.py
+          # Ensure the 'sed' command works properly on both Mac and Linux
+          sed -i.bak "s/version='[^']*'/version='${{ env.NEW_VERSION }}'/" setup.py || \
+          sed -i "s/version=\"[^\"]*\"/version=\"${{ env.NEW_VERSION }}\"/" setup.py
+          
+          # Verify if the version has been updated correctly
+          grep "version=" setup.py
+
+      - name: Commit and Push Changes
+        run: |
           git add setup.py
           git commit -m "Bump version to ${{ env.NEW_VERSION }}" || echo "No changes to commit"
-
-      - name: Push changes and create tag
-        run: |
           git push origin main
+
+      - name: Create and push tag
+        run: |
           git tag -a "v${{ env.NEW_VERSION }}" -m "Release ${{ env.NEW_VERSION }}"
           git push origin "v${{ env.NEW_VERSION }}"
