@@ -38,5 +38,5 @@ setup(
         ]
     },
     python_requires=">=3.7, <4",
-    include_package_data=True,  # This will include all files in MANIFEST.in the package when it is installed
+    include_package_data=True,
 )
