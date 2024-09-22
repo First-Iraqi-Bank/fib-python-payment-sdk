@@ -72,8 +72,9 @@ jobs:
 
       - name: Update setup.py with new version
         run: |
-          python -c "import re; content = open('setup.py').read(); updated_content = re.sub(r'version=[\'\"]([^\'\"]+)[\'\"]', f\"version='{env.NEW_VERSION}'\", content); open('setup.py', 'w').write(updated_content)"
+          python -c "import re, os; content = open('setup.py').read(); new_version = os.getenv('NEW_VERSION'); updated_content = re.sub(r'version=[\'\"]([^\'\"]+)[\'\"]', f\"version='{new_version}'\", content); open('setup.py', 'w').write(updated_content)"
           echo "Updated setup.py to version ${{ env.NEW_VERSION }}"
+
 
       - name: Commit and push new version
         run: |
