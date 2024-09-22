@@ -21,6 +21,7 @@ config = {
     },
 }
 
+
 # Optionally, you can print the configuration for debugging purposes
 if __name__ == "__main__":
     print(config)
