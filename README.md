@@ -1,7 +1,3 @@
-Here's an updated version of your SDK documentation with the integration examples and payment operations files added:
-
----
-
 # FIB Payment SDK
 
 The FIB Payment SDK provides seamless integration with the FIB payment system, empowering developers to streamline payment transactions and facilitate secure refunds within their applications.
