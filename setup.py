@@ -8,7 +8,7 @@ with open(os.path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name="fib-python-payment-sdk",
-    version='0.1.8',
+    version='0.1.9',
     description="SDK for integrating with the FIB payment system, enabling user authentication and payment "
                 "transactions.",
     long_description=long_description,
