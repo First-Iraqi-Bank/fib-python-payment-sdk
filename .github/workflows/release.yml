@@ -21,6 +21,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Configure Git
+        run: |
+          git config --global user.email "${{ vars.FIB_BOT_MAIL }}"
+          git config --global user.name "${{ vars.FIB_BOT }}"
+          git config --list
 
       - name: Set up Python
         uses: actions/setup-python@v4
