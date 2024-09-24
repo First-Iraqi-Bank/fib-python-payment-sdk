@@ -32,18 +32,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install pytest pytest-cov
 
-      # Step 4: Run tests using pytest with PYTHONPATH
-      - name: Run tests
+      # Step 4: Run the custom test script
+      - name: Run tests using custom test.py
         run: |
           export PYTHONPATH=$PYTHONPATH:$(pwd)
-          pytest --maxfail=5 --disable-warnings --cov=src --cov-report=xml
-
-      # Step 5: Upload code coverage to Codecov (optional)
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          files: ./coverage.xml
-          flags: unittests
-          name: Python SDK Tests
+          python test.py
