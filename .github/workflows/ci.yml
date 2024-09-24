@@ -33,8 +33,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      # Step 3.1: Install your package
+      - name: Install the SDK package
+        run: |
+          pip install -e ./src
+
       # Step 4: Run the custom test script
       - name: Run tests using custom test.py
         run: |
-          export PYTHONPATH=$PYTHONPATH:$(pwd)
+          export PYTHONPATH=$PYTHONPATH:$(pwd)/src
           python test.py
