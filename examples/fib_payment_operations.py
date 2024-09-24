@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-import os
+
 from src.fib_python_payment_sdk.services.fib_auth_integration_service import FIBAuthIntegrationService
 from src.fib_python_payment_sdk.services.fib_payment_integration_service import FIBPaymentIntegrationService
 

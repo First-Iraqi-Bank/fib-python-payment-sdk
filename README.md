@@ -1,6 +1,7 @@
 # FIB Payment SDK
 
-The FIB Payment SDK provides seamless integration with the FIB payment system, empowering developers to streamline payment transactions and facilitate secure refunds within their applications.
+The FIB Payment SDK provides seamless integration with the FIB payment system, empowering developers to streamline
+payment transactions and facilitate secure refunds within their applications.
 
 ---
 
@@ -21,6 +22,7 @@ The FIB Payment SDK provides seamless integration with the FIB payment system, e
 - [Acknowledgments](#acknowledgments)
 - [Versioning](#versioning)
 - [FAQ](#faq)
+
 ---
 
 ## Features
@@ -66,7 +68,8 @@ Set the following environment variables to configure the SDK:
 
 ---
 
-Got it! You want to include the functionality as part of the SDK usage examples in the documentation, without referencing an actual file. Here’s how you can structure that:
+Got it! You want to include the functionality as part of the SDK usage examples in the documentation, without
+referencing an actual file. Here’s how you can structure that:
 
 ---
 
@@ -76,7 +79,8 @@ Below is a basic example of how to use the SDK to handle payment operations dire
 
 #### Payment Operations Example
 
-This example demonstrates how to perform common payment operations, including creating a payment, checking its status, issuing a refund, and canceling a payment.
+This example demonstrates how to perform common payment operations, including creating a payment, checking its status,
+issuing a refund, and canceling a payment.
 
 1. **Setup Environment Variables**:
    Ensure you have loaded the necessary environment variables for the SDK.
@@ -201,7 +205,8 @@ This example demonstrates how to perform common payment operations, including cr
 
 ---
 
-This structure provides clear examples of how to use the SDK for payment operations, focusing on practical usage rather than code organization in a specific file.
+This structure provides clear examples of how to use the SDK for payment operations, focusing on practical usage rather
+than code organization in a specific file.
 
 
 
@@ -209,7 +214,8 @@ This structure provides clear examples of how to use the SDK for payment operati
 
 ### Documentation
 
-For more detailed documentation, refer to the [FIB Online Payment API Documentation](https://documenter.getpostman.com/view/18377702/UVCB93tc).
+For more detailed documentation, refer to
+the [FIB Online Payment API Documentation](https://documenter.getpostman.com/view/18377702/UVCB93tc).
 
 ---
 

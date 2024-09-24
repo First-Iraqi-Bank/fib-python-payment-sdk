@@ -1,9 +1,11 @@
-import requests
-import time
 import json
+import time
+
+import requests
+
 from .fib_auth_integration_service import FIBAuthIntegrationService
-from ..contracts.fib_payment_integration_service_interface import FIBPaymentIntegrationServiceInterface
 from ..config.fib import config
+from ..contracts.fib_payment_integration_service_interface import FIBPaymentIntegrationServiceInterface
 
 
 class FIBPaymentIntegrationService(FIBPaymentIntegrationServiceInterface):
@@ -35,7 +37,8 @@ class FIBPaymentIntegrationService(FIBPaymentIntegrationServiceInterface):
                 time.sleep(self.retry_delay)  # Delay before retrying
             except requests.exceptions.RequestException as e:
                 print(
-                    f"Failed to {method} request to FIB Payment API. URL: {url}, Data: {json.dumps(data)}, Error: {str(e)}")
+                    f"Failed to {method} request to FIB Payment API. URL: {url},"
+                    f" Data: {json.dumps(data)}, Error: {str(e)}")
                 raise Exception(f"Failed to {method} request due to: {str(e)}")
 
         print(f"Failed to {method} request after {self.max_attempts} attempts. URL: {url}, Data: {json.dumps(data)}")

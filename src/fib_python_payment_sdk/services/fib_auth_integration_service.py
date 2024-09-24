@@ -1,8 +1,7 @@
-import os
+import time
 
 import requests
-import time
-import logging
+
 from ..config.fib import config
 
 

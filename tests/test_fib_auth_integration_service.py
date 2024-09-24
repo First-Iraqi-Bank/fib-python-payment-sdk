@@ -1,5 +1,6 @@
 import unittest
 from unittest.mock import patch, MagicMock
+
 from fib_python_payment_sdk.services.fib_auth_integration_service import FIBAuthIntegrationService
 
 

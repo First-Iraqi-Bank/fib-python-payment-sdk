@@ -1,5 +1,6 @@
-from dotenv import load_dotenv
 import os
+
+from dotenv import load_dotenv
 
 # Load .env file
 load_dotenv()
@@ -20,7 +21,6 @@ config = {
         },
     },
 }
-
 
 # Optionally, you can print the configuration for debugging purposes
 if __name__ == "__main__":
