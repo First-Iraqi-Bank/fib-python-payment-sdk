@@ -68,11 +68,6 @@ Set the following environment variables to configure the SDK:
 
 ---
 
-Got it! You want to include the functionality as part of the SDK usage examples in the documentation, without
-referencing an actual file. Here’s how you can structure that:
-
----
-
 ### Usage of the SDK
 
 Below is a basic example of how to use the SDK to handle payment operations directly within your application.
@@ -93,121 +88,44 @@ issuing a refund, and canceling a payment.
    load_dotenv()
    ```
 
-2. **Initialize Services**:
-   Create instances of the authentication and payment integration services.
+2. **Full example**:
+      Below is a full example of how to use the SDK to handle payment operations:
 
-   ```python
-   from fib_python_payment_sdk.services.fib_auth_integration_service import FIBAuthIntegrationService
-   from fib_python_payment_sdk.services.fib_payment_integration_service import FIBPaymentIntegrationService
+      ```python
+      import asyncio
+      from fib_payments import FIBPaymentsClient, FIBConfig, APIError
 
-   # Initialize the authentication service
-   auth_service = FIBAuthIntegrationService()
+      async def main():
+          config = FIBConfig(
+              base_url="https://fib.dev.fib.iq",
+              client_id="your token",
+              client_secret="your secret"
+          )
+   
+          # or config = FIBConfig()
+         async with FIBPaymentsClient(config) as client:
+           try:
+               # Create a payment
+               payment = await client.create_payment(100.00, description="Test payment")
+               payment_details = {
+                  'fib_payment_id': payment['paymentId'],
+                  'readable_code': payment['readableCode'],
+                  'personal_app_link': payment['personalAppLink'],
+                  'valid_until': payment['validUntil'],
+              }
+               print(f"Payment created: {payment_details}")
 
-   # Initialize the payment integration service
-   payment_service = FIBPaymentIntegrationService(auth_service)
-   ```
+               # Check payment status
+               status = await client.get_payment_status(payment['paymentId'])
+               print(f"Payment status: {status}")
 
-3. **Create a Payment**:
+               # Refund the payment
+               refund = await client.refund_payment(payment['paymentId'])
+               print(f"Refund initiated: {refund}")
 
-   To create a payment, use the following function:
-
-   ```python
-   def create_payment(amount, callback_url, description):
-       try:
-           payment_response = payment_service.create_payment(amount, callback_url, description)
-           payment_details = {
-               'fib_payment_id': payment_response['paymentId'],
-               'readable_code': payment_response['readableCode'],
-               'personal_app_link': payment_response['personalAppLink'],
-               'valid_until': payment_response['validUntil'],
-           }
-           return payment_details
-       except Exception as e:
-           print("Error during payment creation:", str(e))
-           return None
-   ```
-
-   Example usage:
-
-   ```python
-   payment_details = create_payment(1000, 'http://localhost/callback', 'Test payment description')
-   print("Payment Details:", payment_details)
-   ```
-
-4. **Check Payment Status**:
-
-   To check the status of a payment:
-
-   ```python
-   def check_payment_status(payment_id):
-       try:
-           status = payment_service.check_payment_status(payment_id)
-           return status
-       except Exception as e:
-           print("Error during payment status check:", str(e))
-           return None
-   ```
-
-   Example usage:
-
-   ```python
-   if payment_details:
-       payment_id = payment_details['fib_payment_id']
-       status = check_payment_status(payment_id)
-       print("Payment Status:", status)
-   ```
-
-5. **Refund a Payment**:
-
-   To refund a payment:
-
-   ```python
-   def refund_payment(payment_id):
-       try:
-           refund_response = payment_service.refund(payment_id)
-           return refund_response.status_code
-       except Exception as e:
-           print("Error during refund:", str(e))
-           return None
-   ```
-
-   Example usage:
-
-   ```python
-   if payment_details:
-       payment_id = payment_details['fib_payment_id']
-       refund_status_code = refund_payment(payment_id)
-       print("Refund Status Code:", refund_status_code)
-   ```
-
-6. **Cancel a Payment**:
-
-   To cancel a payment:
-
-   ```python
-   def cancel_payment(payment_id):
-       try:
-           cancel_response = payment_service.cancel(payment_id)
-           return cancel_response.status_code
-       except Exception as e:
-           print("Error during cancellation:", str(e))
-           return None
-   ```
-
-   Example usage:
-
-   ```python
-   if payment_details:
-       payment_id = payment_details['fib_payment_id']
-       cancel_status_code = cancel_payment(payment_id)
-       print("Cancel Status Code:", cancel_status_code)
-   ```
-
----
-
-This structure provides clear examples of how to use the SDK for payment operations, focusing on practical usage rather
-than code organization in a specific file.
-
+           except APIError as e:
+               print(f"An API error occurred: {str(e)}")
+      ```
 
 
 ---
