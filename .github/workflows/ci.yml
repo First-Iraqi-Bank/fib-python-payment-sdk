@@ -14,8 +14,8 @@ jobs:
 
     strategy:
       matrix:
-        python-version: [3.8, 3.9]
-
+        # Run from 3.7 to 3.12 using the .x range syntax
+        python-version: '3.7.x'
     steps:
       # Step 1: Checkout the code
       - name: Checkout code
