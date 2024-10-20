@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/github/rawandahmad698/fib-python-payment-sdk/branch/main/graph/badge.svg?token=1GRCQ2FO0F)](https://codecov.io/github/rawandahmad698/fib-python-payment-sdk)
+
 # FIB Payment SDK
 
 The FIB Payment SDK provides seamless integration with the FIB payment system, empowering developers to streamline
