@@ -1,7 +1,7 @@
 from typing import Dict, Any, Optional
 from .config import FIBConfig
 from .exceptions import AuthenticationError, APIError
-from .utils import HTTPClient
+from .async_http_utils import HTTPClient
 
 
 class FIBPaymentsClient:

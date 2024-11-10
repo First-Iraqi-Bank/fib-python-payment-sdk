@@ -21,6 +21,6 @@ class FIBConfig:
         return f"{self.base_url}/protected/v1"
 
     def validate(self):
-        if not all([self.base_url, self.client_id, self.client_secret]):
-            raise ValueError("Missing required configuration. "
-                             "Please provide base_url, client_id, and client_secret.")
+        missing_vars = [var for var in ['base_url', 'client_id', 'client_secret'] if not getattr(self, var)]
+        if missing_vars:
+            raise ValueError(f"Missing required configuration: {', '.join(missing_vars)}.")
