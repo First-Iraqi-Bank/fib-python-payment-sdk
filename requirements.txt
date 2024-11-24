@@ -1,6 +1,7 @@
 setuptools~=70.0.0
 python-dotenv~=0.19.2
-requests~=2.32.0
 bumpversion
 pytest
 pytest-cov
+pytest-asyncio
+httpx

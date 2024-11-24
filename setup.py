@@ -31,7 +31,7 @@ setup(
     packages=find_packages("src"),
     package_dir={"": "src"},
     install_requires=[
-        "requests>=2.31.0"
+        "httpx>=0.27.0,<1.0.0",
     ],
     extras_require={
         "dev": [
