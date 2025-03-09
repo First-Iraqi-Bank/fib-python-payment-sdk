@@ -50,12 +50,14 @@ class FIBPaymentsClient:
         return response.json()
 
     async def create_payment(self, amount: float, currency: Optional[str] = None,
-                             callback_url: Optional[str] = None,
-                             description: Optional[str] = None) -> Dict[str, Any]:
+                         callback_url: Optional[str] = None,
+                         description: Optional[str] = None,
+                         redirect_uri: Optional[str] = None) -> Dict[str, Any]:
         """Create a new payment."""
         data = {
             'monetaryValue': {'amount': amount, 'currency': currency or self.config.currency},
             'statusCallbackUrl': callback_url or self.config.callback_url,
+            'redirectUri': redirect_uri or '',
             'description': description or '',
             'refundableFor': self.config.refundable_for,
         }

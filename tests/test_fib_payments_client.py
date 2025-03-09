@@ -80,7 +80,7 @@ async def test_request_failure(client, mock_http_client):
 async def test_create_payment(client):
     client._request = AsyncMock(return_value={'id': 'payment_id'})
 
-    result = await client.create_payment(100.0, 'EUR', 'https://custom-callback.com', 'Test payment')
+    result = await client.create_payment(100.0, 'EUR', 'https://custom-callback.com', 'Test payment', 'https://custom-redirect-uri.com')
 
     assert result == {'id': 'payment_id'}
     client._request.assert_called_once_with(
@@ -89,6 +89,7 @@ async def test_create_payment(client):
         json={
             'monetaryValue': {'amount': 100.0, 'currency': 'EUR'},
             'statusCallbackUrl': 'https://custom-callback.com',
+            'redirectUri': 'https://custom-redirect-uri.com',
             'description': 'Test payment',
             'refundableFor': client.config.refundable_for,
         }
