@@ -108,7 +108,8 @@ issuing a refund, and canceling a payment.
          async with FIBPaymentsClient(config) as client:
            try:
                # Create a payment
-               payment = await client.create_payment(100.00, description="Test payment")
+               payment = await client.create_payment(100.00, currency="USD", callback_url="https://example.com/callback", description="Test payment", redirect_uri="https://example.com/redirect")
+               
                payment_details = {
                   'fib_payment_id': payment['paymentId'],
                   'readable_code': payment['readableCode'],
